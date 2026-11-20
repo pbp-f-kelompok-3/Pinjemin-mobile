@@ -2,8 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import '../main.dart';
+import '../screens/barang/daftar_barang_page.dart';
 import '../screens/help_center_screen.dart';
+import '../screens/kategori/browse_page.dart';
+import '../screens/lokasi/peta_barang_page.dart';
 import '../screens/profile_screen.dart';
+import '../screens/transaksi/daftar_transaksi_page.dart';
 import '../services/session_provider.dart';
 
 class LeftDrawer extends StatelessWidget {
@@ -75,6 +79,27 @@ class LeftDrawer extends StatelessWidget {
               title: const Text('Beranda'),
               onTap: () => _backToHome(context),
             ),
+            ListTile(
+              leading: const Icon(Icons.search),
+              title: const Text('Jelajahi Barang'),
+              onTap: () => _openFromHome(context, const BrowsePage()),
+            ),
+            ListTile(
+              leading: const Icon(Icons.inventory_2_outlined),
+              title: const Text('Barang Saya'),
+              onTap: () => _openFromHome(context, DaftarBarangPage()),
+            ),
+            ListTile(
+              leading: const Icon(Icons.receipt_long_outlined),
+              title: const Text('Transaksi'),
+              onTap: () => _openFromHome(context, const DaftarTransaksiPage()),
+            ),
+            ListTile(
+              leading: const Icon(Icons.map_outlined),
+              title: const Text('Peta Barang'),
+              onTap: () => _openFromHome(context, const PetaBarangPage()),
+            ),
+            const Divider(),
             ListTile(
               leading: const Icon(Icons.person_outline),
               title: const Text('Profil'),

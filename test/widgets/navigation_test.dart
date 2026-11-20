@@ -1,6 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:pinjemin_mobile/screens/barang/daftar_barang_page.dart';
 import 'package:pinjemin_mobile/screens/help_center_screen.dart';
+import 'package:pinjemin_mobile/screens/kategori/browse_page.dart';
+import 'package:pinjemin_mobile/screens/lokasi/peta_barang_page.dart';
+import 'package:pinjemin_mobile/screens/transaksi/daftar_transaksi_page.dart';
 import 'package:pinjemin_mobile/screens/home_screen.dart';
 import 'package:pinjemin_mobile/screens/profile_screen.dart';
 import 'package:pinjemin_mobile/services/session_provider.dart';
@@ -104,6 +108,24 @@ void main() {
     await tester.pumpAndSettle();
     expect(find.text('Halo, Roisul'), findsOneWidget);
     expect(navigator.canPop(), isFalse);
+  });
+
+  testWidgets('drawer opens the other modules\' pages', (tester) async {
+    await pumpSettled(
+      tester,
+      wrapWithApp(const HomeScreen(), request: FakeCookieRequest(), session: sessionWith()),
+    );
+
+    final pages = {
+      'Jelajahi Barang': BrowsePage,
+      'Barang Saya': DaftarBarangPage,
+      'Transaksi': DaftarTransaksiPage,
+      'Peta Barang': PetaBarangPage,
+    };
+    for (final entry in pages.entries) {
+      await openDrawerItem(tester, entry.key);
+      expect(find.byType(entry.value), findsOneWidget, reason: entry.key);
+    }
   });
 
   testWidgets('Beranda in the drawer closes it on the home screen', (tester) async {
