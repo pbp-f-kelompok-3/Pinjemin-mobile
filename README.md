@@ -2,7 +2,7 @@
 
 Pinjemin Mobile adalah aplikasi Flutter untuk pinjam dan sewa barang antar mahasiswa Universitas Indonesia. Barang yang hanya dibutuhkan sesekali, seperti kabel rol untuk acara atau koper untuk pulang, bisa dipinjam dari mahasiswa lain. Lewat Pinjemin, barang yang jarang dipakai bisa dimanfaatkan bersama. Ide ini kami bawa dari proyek web Pinjemin bertema *Sustainable Living*.
 
-Repo ini memuat beranda dan kerangka halaman untuk lima modul. Drawer mengarah ke halaman awal yang tercantum di bawah. Form masuk masih berupa simulasi dan Barang Saya masih menampilkan data contoh. Integrasi Flutter dengan API Django masih dalam pengembangan.
+Repo ini memuat beranda dan halaman untuk lima modul. Drawer mengarah ke halaman awal yang tercantum di bawah. Barang Saya masih menampilkan data contoh.
 
 ## Anggota Kelompok dan Pembagian Modul
 
@@ -32,7 +32,7 @@ Pengunjung bisa menyaring katalog di Jelajahi Barang dan membuka Detail Barang. 
 
 ### Manajemen Lokasi
 
-Pemilik mengelola titik penjemputan di Lokasi Tersimpan. Setiap lokasi memiliki label, alamat, dan koordinat yang dapat dipilih dari peta. Halaman Peta Barang menampilkan barang dalam radius yang dipilih pengguna.
+**Peta Barang** dapat dibuka dari drawer. Cakupan modul ini adalah pencarian barang dalam radius 1 atau 2 km dari titik yang dipilih di peta, serta pengelolaan titik penjemputan di **Lokasi Tersimpan**. Setiap lokasi memiliki label, alamat, dan koordinat. Titik barang yang muncul di hasil pencarian menunjukkan lokasi perkiraan.
 
 ### Manajemen Transaksi
 
@@ -57,9 +57,9 @@ Saat halaman dibuka atau pengguna menekan tombol, Flutter mengirim permintaan HT
 
 Contohnya, saat pemilik membuka **Lokasi Tersimpan**, Flutter mengambil daftar lokasi dengan `GET /api/lokasi-penjemputan/`. Ketika pemilik memilih titik di peta dan menekan **Simpan**, Flutter mengirim label, alamat, dan koordinat lewat `POST` ke rute yang sama. Setelah Django menyimpan lokasi, Flutter menambahkannya ke daftar berdasarkan respons API. Lokasi itu juga muncul di situs Pinjemin ketika pemilik masuk dengan akun yang sama.
 
-### Rancangan Endpoint
+### Endpoint DRF
 
-Tabel ini memakai path relatif. Alamat lengkap endpoint adalah alamat dasar server Django ditambah path, misalnya `<alamat-server-django>/api/lokasi-penjemputan/`. Rute di bawah ini masih berupa rancangan dan dapat berubah mengikuti pengembangan.
+Alamat lengkap endpoint terdiri dari alamat server Django dan path API, misalnya `<alamat-server-django>/api/lokasi-penjemputan/`. Ketiga rute modul **Lokasi** sudah berjalan di Django lokal dan diuji melalui permintaan HTTP dari klien Flutter. Rute modul lain di tabel ini masih berupa rancangan integrasi.
 
 | Modul | Rute | Metode | Fungsi |
 | --- | --- | --- | --- |
@@ -78,8 +78,8 @@ Tabel ini memakai path relatif. Alamat lengkap endpoint adalah alamat dasar serv
 
 ### Layanan Eksternal
 
-- **SSO UI (simulasi)** digunakan dalam rancangan login modul Pengguna. Flutter akan mengirim permintaan masuk ke endpoint autentikasi Django dan menerima hasilnya dari API.
-- **OpenStreetMap** akan menyediakan peta dasar untuk Peta Barang dan pemilihan titik penjemputan di Flutter. Daftar barang terdekat dan lokasi tersimpan akan diambil dari endpoint DRF Pinjemin.
+- **SSO UI** digunakan untuk login melalui WebView di Flutter. Django memvalidasi tiket SSO dan membuat sesi untuk endpoint yang memerlukan login.
+- **OpenStreetMap** menyediakan peta dasar untuk Peta Barang dan pemilihan titik penjemputan di Flutter. Daftar barang terdekat dan lokasi tersimpan diambil dari endpoint DRF Pinjemin.
 
 
 ## Tautan
@@ -98,4 +98,4 @@ flutter run
 
 Untuk membuka kerangka aplikasi di Chrome, gunakan `flutter run -d chrome`.
 
-Pengujian integrasi memakai akun dan data contoh dari database pengembangan Django setelah API modul tersedia.
+Server Django yang dipakai Flutter perlu menjalankan versi backend yang memuat endpoint Lokasi. Pengujian endpoint dapat dijalankan dari repo Django dengan `python manage.py test locations.test_api`. Di repo Flutter, jalankan `flutter test test/widgets/navigation_test.dart` untuk memeriksa navigasi.
