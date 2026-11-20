@@ -82,10 +82,24 @@ void main() {
   });
 
   Future<void> openDrawerItem(WidgetTester tester, String label) async {
+    final transactionPageIsOpen =
+        find.byType(DaftarTransaksiPage).evaluate().isNotEmpty;
     await tester.tap(find.byTooltip('Open navigation menu').last);
-    await tester.pumpAndSettle();
+    if (transactionPageIsOpen) {
+      await tester.pump();
+      await tester.pump(const Duration(milliseconds: 350));
+    } else {
+      await tester.pumpAndSettle();
+    }
     await tester.tap(find.text(label).last);
-    await tester.pumpAndSettle();
+    if (label == 'Transaksi') {
+      // The history request is asynchronous, so the loading indicator remains
+      // active until the endpoint responds.
+      await tester.pump();
+      await tester.pump(const Duration(milliseconds: 350));
+    } else {
+      await tester.pumpAndSettle();
+    }
   }
 
   testWidgets('drawer opens Profil and Bantuan without stacking pages', (tester) async {
