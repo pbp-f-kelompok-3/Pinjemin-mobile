@@ -39,3 +39,11 @@ app.*.map.json
 /android/app/debug
 /android/app/profile
 /android/app/release
+# Course rules: no secrets, databases or virtualenvs
+.env
+.env.*
+*.sqlite3
+env/
+venv/
+.venv/
+coverage/
