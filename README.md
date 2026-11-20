@@ -1,104 +1,101 @@
-# Pinjemin Mobile 📱
+# Pinjemin Mobile
 
-Aplikasi mobile yang memfasilitasi mahasiswa Universitas Indonesia dalam meminjamkan atau menyewakan barang kebutuhan kuliah, organisasi, dan kos — guna mengurangi penumpukan barang jarang terpakai dan pembelian berlebih.
+Pinjemin Mobile adalah aplikasi Flutter untuk pinjam dan sewa barang antar mahasiswa Universitas Indonesia. Barang yang hanya dibutuhkan sesekali, seperti kabel rol untuk acara atau koper untuk pulang, bisa dipinjam dari mahasiswa lain. Lewat Pinjemin, barang yang jarang dipakai bisa dimanfaatkan bersama. Ide ini kami bawa dari proyek web Pinjemin bertema *Sustainable Living*.
 
-Proyek ini merupakan versi mobile dari [Pinjemin Web](https://roisul-umam-pinjemin.pws.cs.ui.ac.id/) yang dibangun dengan Flutter, terhubung ke backend Django melalui Django REST Framework.
+Repo ini memuat beranda dan kerangka halaman untuk lima modul. Drawer mengarah ke halaman awal yang tercantum di bawah. Form masuk masih berupa simulasi dan Barang Saya masih menampilkan data contoh. Integrasi Flutter dengan API Django masih dalam pengembangan.
 
----
+## Anggota Kelompok dan Pembagian Modul
 
-## Anggota Kelompok dan Pembagian Tugas
+| NPM | Nama | Modul | Halaman awal |
+| --- | --- | --- | --- |
+| 2506620210 | Roisul Umam | Manajemen Pengguna | Masuk |
+| 2506587876 | Chelsea Stania Passikha | Manajemen Kategori | Jelajahi Barang (kerangka Kategori) |
+| 2506607272 | Fauzan Taqiy Santosa | Manajemen Barang | Barang Saya |
+| 2506615993 | I Nyoman Yadnya Suta Karmana | Manajemen Lokasi | Peta Barang |
+| 2506632910 | Alphard Qodaruddin | Manajemen Transaksi | Transaksi |
 
-| NPM | Nama | Modul |
-| :---: | :--- | :--- |
-| **2506632910** | Alphard Qodaruddin | Manajemen Transaksi |
-| **2506587876** | Chelsea Stania Passikha | Manajemen Kategori & Browse |
-| **2506615993** | I Nyoman Yadnya Suta Karmana | Manajemen Lokasi & Peta |
-| **2506607272** | Fauzan Taqiy Santosa | Manajemen Barang |
-| **2506620210** | Roisul Umam | Manajemen Pengguna (Login & Profil) |
+## Modul Aplikasi
 
----
+Ini cakupan fitur yang dirancang untuk setiap modul. Penanggung jawab modul mengerjakan halaman Flutter beserta serializer dan view atau viewset Django REST Framework untuk data yang dikelolanya.
 
-## Deskripsi Aplikasi
+### Manajemen Pengguna
 
-**Pinjemin** adalah platform berbagi dan peminjaman barang berbasis komunitas mahasiswa UI dengan tema *Sustainable Living*. Pengguna dapat:
-- 🔍 **Menjelajahi** barang yang tersedia di sekitar kampus
-- 📦 **Meminjamkan atau menyewakan** barang milik sendiri
-- 🗺️ **Melihat lokasi** barang terdekat di peta
-- 💳 **Bertransaksi** secara aman dengan sesama mahasiswa UI
+Halaman Masuk mengikuti alur login di situs Pinjemin. Di halaman Profil, pengguna bisa melihat data akun, mengubah nomor WhatsApp, beralih antara mode Peminjam dan Pemilik Barang, atau keluar.
 
----
+### Manajemen Kategori
 
-## Peran / Aktor Pengguna
+Halaman Kategori menampilkan daftar kategori barang. Admin punya halaman Kelola Kategori untuk menambah, mengganti nama, atau menghapus kategori. Kategori yang tersimpan dapat dipilih sebagai filter di katalog.
 
-| Peran | Hak Akses |
-| :--- | :--- |
-| **Tamu** | Melihat beranda dan daftar barang secara terbatas |
-| **Peminjam** | Login, memesan barang, melihat riwayat transaksi |
-| **Pemilik Barang** | Menambah, mengedit, dan menghapus barang milik sendiri; melihat pesanan masuk |
-| **Admin** | Mengelola kategori barang dan memantau aktivitas platform |
+### Manajemen Barang
 
----
+Pengunjung bisa menyaring katalog di Jelajahi Barang dan membuka Detail Barang. Dari Barang Saya, pemilik bisa menambah, mengedit, atau menghapus barangnya. Formulir barang memuat foto, deskripsi, jenis pinjam atau sewa, dan tarif. Pilihan kategori dan titik jemput diambil dari data yang sudah tersimpan di Django.
 
-## Modul yang Diimplementasikan
+### Manajemen Lokasi
 
-### 1. Manajemen Pengguna (Roisul Umam)
-Login via SSO UI, halaman profil, beralih mode Peminjam/Pemilik Barang.
+Pemilik mengelola titik penjemputan di Lokasi Tersimpan. Setiap lokasi memiliki label, alamat, dan koordinat yang dapat dipilih dari peta. Halaman Peta Barang menampilkan barang dalam radius yang dipilih pengguna.
 
-### 2. Manajemen Kategori & Browse (Chelsea Stania Passikha)
-Halaman utama/browse barang, filter berdasarkan kategori, harga, dan lokasi.
+### Manajemen Transaksi
 
-### 3. Manajemen Lokasi & Peta (I Nyoman Yadnya Suta Karmana)
-Peta barang terdekat berbasis lokasi, detail lokasi penjemputan.
+Peminjam memilih jadwal dan durasi di Checkout, lalu melihat biaya, status pembayaran, dan titik jemput di Detail Pesanan. Pesanan sebelumnya dapat dibuka lewat Riwayat. Dari Pesanan Masuk, pemilik bisa menindaklanjuti permintaan pinjam, serah terima, dan pengembalian.
 
-### 4. Manajemen Barang (Fauzan Taqiy Santosa)
-Dashboard barang saya, tambah barang, edit barang, hapus barang.
+## Peran Pengguna
 
-### 5. Manajemen Transaksi (Alphard Qodaruddin)
-Daftar pesanan, checkout, riwayat transaksi, status pembayaran.
+| Peran | Hak akses |
+| --- | --- |
+| Tamu | Melihat beranda, menjelajahi katalog, dan membuka informasi umum barang. |
+| Peminjam | Membuat pesanan, melihat riwayat dan statusnya, serta melihat titik penjemputan untuk pesanannya. |
+| Pemilik Barang | Mengelola barang sendiri dan lokasi tersimpan, serta menindaklanjuti pesanan yang masuk. |
+| Admin | Menambah, mengubah, dan menghapus kategori barang. |
 
----
+Peminjam dan Pemilik Barang adalah dua mode pada akun yang sama. Hak akses setiap aksi diperiksa di Django.
 
-## Alur Integrasi Mobile ↔ Web Django
+## Integrasi Flutter dan Django
 
-```
-Aplikasi Flutter (Mobile)
-        |
-        | HTTP Request + Cookie Session
-        ↓
-Django REST Framework (API Endpoints)
-        |
-        | QuerySet Django ORM
-        ↓
-Database PostgreSQL (di PWS)
-```
+**Django REST Framework (DRF)** adalah pustaka di Django untuk membuat API. Flutter akan memanggil API ini untuk membaca dan memperbarui barang, lokasi, dan pesanan. Data tersebut tetap disimpan di database yang sama dengan situs web Pinjemin dari Proyek Tengah Semester.
 
-Aplikasi Flutter berkomunikasi dengan backend Django di [https://roisul-umam-pinjemin.pws.cs.ui.ac.id/](https://roisul-umam-pinjemin.pws.cs.ui.ac.id/) melalui endpoint REST API yang dibangun dengan Django REST Framework. Autentikasi menggunakan cookie session yang dikelola oleh package `pbp_django_auth`.
+Saat halaman dibuka atau pengguna menekan tombol, Flutter mengirim permintaan HTTP secara asinkron. View atau viewset di Django memeriksa hak akses, lalu membaca data atau menyimpan perubahan setelah input divalidasi oleh serializer. Flutter membaca respons JSON dari API untuk memperbarui tampilan.
 
----
+Contohnya, saat pemilik membuka **Lokasi Tersimpan**, Flutter mengambil daftar lokasi dengan `GET /api/lokasi-penjemputan/`. Ketika pemilik memilih titik di peta dan menekan **Simpan**, Flutter mengirim label, alamat, dan koordinat lewat `POST` ke rute yang sama. Setelah Django menyimpan lokasi, Flutter menambahkannya ke daftar berdasarkan respons API. Lokasi itu juga muncul di situs Pinjemin ketika pemilik masuk dengan akun yang sama.
 
-## Link
+### Rancangan Endpoint
 
-- 🎨 **Figma:** https://www.figma.com/design/cIcomyuXpNiIPvk3Wa4gwo/Design-System?node-id=0-1&p=f&t=STwAfPD95yE7Ky2X-0
-- 🌐 **Web PWS:** https://roisul-umam-pinjemin.pws.cs.ui.ac.id/
-- 📦 **APK:** *(akan ditambahkan setelah build)*
+Tabel ini memakai path relatif. Alamat lengkap endpoint adalah alamat dasar server Django ditambah path, misalnya `<alamat-server-django>/api/lokasi-penjemputan/`. Rute di bawah ini masih berupa rancangan dan dapat berubah mengikuti pengembangan.
 
----
+| Modul | Rute | Metode | Fungsi |
+| --- | --- | --- | --- |
+| Pengguna | `/api/akun/login/`, `/api/akun/logout/` | `POST` | Masuk dan keluar dari akun. |
+| Pengguna | `/api/akun/profil/` | `GET`, `PATCH` | Membaca atau memperbarui profil. |
+| Kategori | `/api/kategori/` | `GET`, `POST` | Melihat daftar atau menambah kategori. |
+| Kategori | `/api/kategori/{id}/` | `PATCH`, `DELETE` | Mengubah atau menghapus kategori. |
+| Barang | `/api/barang/` | `GET`, `POST` | Melihat katalog atau menambah barang. |
+| Barang | `/api/barang/{id}/` | `GET`, `PATCH`, `DELETE` | Melihat detail, mengubah, atau menghapus barang. |
+| Barang | `/api/barang/pilihan-form/` | `GET` | Mengambil pilihan kategori dan titik jemput untuk formulir barang. |
+| Lokasi | `/api/lokasi-penjemputan/` | `GET`, `POST` | Melihat atau menambah lokasi tersimpan milik akun. |
+| Lokasi | `/api/lokasi-penjemputan/{id}/` | `PATCH`, `DELETE` | Mengubah atau menghapus lokasi tersimpan. |
+| Lokasi | `/api/barang-terdekat/` | `GET` | Mencari barang berdasarkan koordinat dan radius. |
+| Transaksi | `/api/pesanan/` | `GET`, `POST` | Melihat daftar pesanan atau membuat pesanan. |
+| Transaksi | `/api/pesanan/{id}/` | `GET`, `PATCH` | Melihat detail, termasuk status pembayaran, atau memperbarui status pesanan. |
 
-## Cara Menjalankan Lokal
+### Layanan Eksternal
+
+- **SSO UI (simulasi)** digunakan dalam rancangan login modul Pengguna. Flutter akan mengirim permintaan masuk ke endpoint autentikasi Django dan menerima hasilnya dari API.
+- **OpenStreetMap** akan menyediakan peta dasar untuk Peta Barang dan pemilihan titik penjemputan di Flutter. Daftar barang terdekat dan lokasi tersimpan akan diambil dari endpoint DRF Pinjemin.
+
+
+## Tautan
+
+- [Acuan desain Pinjemin di Figma](https://www.figma.com/design/cIcomyuXpNiIPvk3Wa4gwo/Design-System?node-id=0-1&p=f&t=STwAfPD95yE7Ky2X-0)
+- Tautan APK menyusul setelah rilis.
+
+## Menjalankan Aplikasi Secara Lokal
+
+Gunakan Flutter SDK yang menyertakan Dart 3.13.7 atau versi 3.x yang lebih baru, sesuai `pubspec.yaml`. Dari folder repo, jalankan perintah berikut dengan emulator Android atau perangkat yang sudah terhubung.
 
 ```bash
-# Clone repo
-git clone https://github.com/pbp-f-kelompok-3/Pinjemin-mobile
-cd Pinjemin-mobile
-
-# Install dependencies
 flutter pub get
-
-# Jalankan di Chrome (paling cepat)
-flutter run -d chrome
-
-# Atau di emulator Android
 flutter run
 ```
 
-**Requirements:** Flutter SDK ≥ 3.13, Dart SDK ≥ 3.13
+Untuk membuka kerangka aplikasi di Chrome, gunakan `flutter run -d chrome`.
+
+Pengujian integrasi memakai akun dan data contoh dari database pengembangan Django setelah API modul tersedia.
