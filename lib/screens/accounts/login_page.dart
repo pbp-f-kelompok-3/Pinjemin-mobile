@@ -96,13 +96,13 @@ class _LoginPageState extends State<LoginPage> {
                                     setState(() => _isLoading = true);
                                     Future.delayed(
                                         const Duration(seconds: 1), () {
-                                      if (mounted) {
-                                        setState(() => _isLoading = false);
-                                        ScaffoldMessenger.of(context)
-                                            .showSnackBar(const SnackBar(
-                                                content: Text(
-                                                    'Login berhasil! (dummy)')));
-                                      }
+                                      if (!mounted) return;
+                                      setState(() => _isLoading = false);
+                                      // ignore: use_build_context_synchronously
+                                      ScaffoldMessenger.of(context)
+                                          .showSnackBar(const SnackBar(
+                                              content: Text(
+                                                  'Login berhasil! (dummy)')));
                                     });
                                   },
                             child: _isLoading
